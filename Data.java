@@ -17,7 +17,7 @@ public class Data {
 	        scanner.useDelimiter(delimiter);
 
 	        while (scanner.hasNextLine()) {
-	            String line = scanner.nextLine();
+	            String line = scanner.nextLine().replaceAll("\"", "");;
 	            String[] fields = line.split(delimiter);
 	            rows.add(fields);
 	        }

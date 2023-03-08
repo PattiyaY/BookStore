@@ -56,15 +56,15 @@ public class Book extends BookStore {
 				} else {
 					continue;
 				}
-				for (int i = 0; i < data.length; i++) {
-					System.out.print(Arrays.toString(data[i]) + "\n");
-				}
+//				for (int i = 0; i < data.length; i++) {
+//					System.out.print(Arrays.toString(data[i]) + "\n");
+//				}
 			}
 		} catch (FileNotFoundException e) {
 			System.out.println("Error!");
 			e.printStackTrace();
 		}
-		System.out.println(data);
+//		System.out.println(data);
 		return data;
 	}
 
@@ -130,9 +130,6 @@ public class Book extends BookStore {
 				selectedFields[1] = fields[1]; // category
 
 				elements.add(selectedFields);
-				if (fields[0].equals("1110")) {
-					break;
-				}
 			}
 		} catch (IOException e) {
 			e.printStackTrace();

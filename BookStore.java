@@ -5,7 +5,11 @@ import java.util.Scanner;
 
 import javax.swing.JOptionPane;
 
+import com.opencsv.CSVReader;
+import com.opencsv.CSVWriter;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -37,17 +41,38 @@ public class BookStore {
 	}
 	
 	
-	public void addRewardPoint(String id, String point) throws IOException {
-		FileWriter fw = new FileWriter(file, true);
-		BufferedWriter bw = new BufferedWriter(fw);
-		List<String[]> info = customerData.parse(file, ",");
-		for(String[] account: info) {
-				if(account[0].equals(id)) {
-					//account[7] = bw.write(point);
-					JOptionPane.showMessageDialog(null, "Reward points Saved!");
-				}
-			}
-		} 
+	public void updateRewardPoint(String customerId, String newRewardPoint) throws IOException {
+	    String file = "/Users/pattiyayiadram/Java project/BookStore - Customer1.csv";
+	    boolean changed = false;
+
+	    try {
+	        CSVReader reader = new CSVReader(new FileReader(file));
+	        List<String[]> data = reader.readAll();
+	        reader.close();
+
+	        for (int i = 0; i < data.size(); i++) {
+	            String[] customerData = data.get(i);
+	            if (customerData[0].equals(customerId)) {
+	                customerData[7] = newRewardPoint;
+	                changed = true;
+	                break;
+	            }
+	        }
+
+	        if (changed) {
+	            CSVWriter writer = new CSVWriter(new FileWriter(file));
+	            writer.writeAll(data);
+	            writer.close();
+	            System.out.println("Reward point updated successfully.");
+	        } else {
+	            System.out.println("Customer not found.");
+	        }
+
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	    }
+	}
+
 		
 	}
 

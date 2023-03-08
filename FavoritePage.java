@@ -75,7 +75,7 @@ public class FavoritePage extends JFrame {
 		//
 		// button Back
 		JButton buttonBack = new JButton("Back");
-		buttonBack.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		buttonBack.setFont(new Font("Avenir", Font.PLAIN, 16));
 		menuBar.add(buttonBack);
 		buttonBack.addMouseListener(new MouseAdapter() {
 			@Override
@@ -90,7 +90,7 @@ public class FavoritePage extends JFrame {
 		//
 		// button Shopping Cart
 		JButton buttonShoppingCart = new JButton("Shopping Cart");
-		buttonShoppingCart.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		buttonShoppingCart.setFont(new Font("Avenir", Font.PLAIN, 16));
 		menuBar.add(buttonShoppingCart);
 		buttonShoppingCart.addMouseListener(new MouseAdapter() {
 			@Override
@@ -102,7 +102,7 @@ public class FavoritePage extends JFrame {
 		//
 		// button Logout
 		JButton buttonLogout = new JButton("Logout");
-		buttonLogout.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		buttonLogout.setFont(new Font("Avenir", Font.PLAIN, 16));
 		menuBar.add(buttonLogout);
 		buttonLogout.addMouseListener(new MouseAdapter() {
 			@Override

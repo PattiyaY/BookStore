@@ -91,6 +91,13 @@ public class ShoppingCartPage extends JFrame {
 		menuBar.add(horizontalGlue); 
 		
 		JButton btnNewButton_1 = new JButton("Wishlist");
+		btnNewButton_1.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				dispose();
+				new FavoritePage(customer).setVisible(true);
+			}
+		});
 		btnNewButton_1.setFont(new Font("Avenir", Font.PLAIN, 16));
 		menuBar.add(btnNewButton_1);
 		

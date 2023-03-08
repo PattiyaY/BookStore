@@ -8,6 +8,8 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.ImageIcon;
+
 import java.awt.Color;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -53,6 +55,11 @@ public class Signup extends JFrame {
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(232, 232, 255));
+		ImageIcon imageIcon = new ImageIcon("/Users/pattiyayiadram/Java project/bookstore.jpg");
+		JLabel imageLabel = new JLabel(imageIcon);
+		panel.add(imageLabel);
+		add(panel);
+
 		
 		JLabel labelHeader = new JLabel("Sign Up");
 		labelHeader.setForeground(new Color(255, 255, 255));

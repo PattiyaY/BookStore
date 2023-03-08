@@ -44,8 +44,6 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 public class BillPage extends JFrame {
 
 	private JPanel contentPane;
-	private Data data = new Data();
-	private String file = "\\Users\\ASUS\\eclipse-workspace\\BookStore\\src\\BookStoreApp\\BookStore - Book.csv";
 	private String discount;
 	private String total;
 	private String tax;
@@ -53,7 +51,7 @@ public class BillPage extends JFrame {
 
 	/**
 	 * Create the frame.
-	 * @throws IOException 
+	 * 
 	 */
 	public BillPage(Customer customer) {
 		
@@ -75,12 +73,11 @@ public class BillPage extends JFrame {
 		
 		// textPane show bill
 		Date dd = new Date();
-		SimpleDateFormat date = new SimpleDateFormat("yyyy-mm-dd");
+		SimpleDateFormat date = new SimpleDateFormat("yyyy - MMMM - dd");
 		SimpleDateFormat time = new SimpleDateFormat("hh:mm:ss");
 		String dateD = date.format(dd);
 		String timeT = time.format(dd);
-		System.out.println(dateD);
-		System.out.println(timeT);
+
 		//
 		JTextPane textPane = new JTextPane();
 		textPane.setFont(new Font("Avenir", Font.PLAIN, 13));
@@ -93,7 +90,7 @@ public class BillPage extends JFrame {
 		textPane.setText(textPane.getText() + "\t               Samut Prakan Thailand 10570\n");
 		textPane.setText(textPane.getText() + "   ----------------------------------------------------------------------------------------------------\n");
 		textPane.setText(textPane.getText() + "   Items\t\t\tQty\t\tPrice\n");
-		textPane.setText(textPane.getText() + "   ----------------------------------------------------------------------------------------------------\n\n");
+		textPane.setText(textPane.getText() + "   ----------------------------------------------------------------------------------------------------\n");
 		for (Book item : customer.getBook()) {
 		    String itemName = item.getTitle();
 		    String itemPrice = item.getPrice();
@@ -104,7 +101,12 @@ public class BillPage extends JFrame {
 		this.total = String.format("%.2f", customer.getBillTotal());
 		this.tax = String.format("%.2f", customer.getTax());
 		this.newRewardPoint = customer.getNewRewardPoint(customer.getTotal());
-		//((BookStore) customer).addRewardPoint(customer.getID(), newRewardPoint);
+		try {
+			((BookStore)customer).updateRewardPoint(customer.getID(), newRewardPoint);
+		} catch (IOException e1) {
+			System.out.println("Update unsuccessful!");
+			e1.printStackTrace();
+		}
 		textPane.setText(textPane.getText()
 		    + "   ----------------------------------------------------------------------------------------------------\n"
 		    + "   Discount :\t\t\t\t" + "$" + discount +"\n"
@@ -123,6 +125,7 @@ public class BillPage extends JFrame {
 		JButton buttonDone = new JButton("Done");
 		buttonDone.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				customer.getBook().clear();
 				dispose();
 				new HomePage(customer).setVisible(true);
 			}

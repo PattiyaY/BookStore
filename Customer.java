@@ -1,5 +1,7 @@
 package BookStoreApp_Fullversion;
 
+import com.opencsv.*;
+import java.io.*;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -9,6 +11,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -51,42 +54,39 @@ public class Customer extends BookStore{
 	public boolean updateInformation(String id, String newFirstName, String newLastName, String newEmail, String newPassword, String newAddress, String newPhoneNumber) {
 	    String file = "/Users/pattiyayiadram/Java project/BookStore - Customer1.csv";
 	    boolean changed = false;
-	    String checkid = "";
 	
 
 	    try {
-	        File inputFile = new File(file);
-	        File tempFile = new File(file);
-	        BufferedReader reader = new BufferedReader(new FileReader(inputFile));
-	        BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile));
-	        String line = id + "," + name + "," + lastName + "," + email + "," + password + "," + address + "," + phoneNumber;
+	        String[] oldData = {id ,name ,lastName ,email ,password ,address ,phoneNumber ,rewardPoint};
+	        String[] newData = {id ,newFirstName ,newLastName ,newEmail ,newPassword ,newAddress ,newPhoneNumber, rewardPoint};
+	        
+	        CSVReader reader = new CSVReader(new FileReader(file));
+	        List<String[]> data = reader.readAll();
+	        reader.close();
 
-	        while ((line = reader.readLine()) != null) {
-	            String[] parts = line.split(",");
-	            checkid = parts[0];
-	            setName(parts[1]);
-	            setLastName(parts[2]);
-	            setEmail(parts[3]);
-	            setPassword(parts[4]);
-	            setAddress(parts[5]);
-	            setPhoneNumber(parts[6]);
-	            setRewardPoint(parts[7] = "0");
-
-	            if (checkid.equals(id)) {
-	                writer.write(id + "," + newFirstName + "," + newLastName + "," + newEmail + "," + newPassword + "," + newAddress + "," + newPhoneNumber);
+	        for (int i = 0; i < data.size(); i++) {
+	            if (Arrays.equals(data.get(i), oldData)) {
+	                data.set(i, newData);
 	                changed = true;
+	                setID(id);
+					setName(newFirstName);
+					setLastName(newLastName);
+					setEmail(newEmail);
+					setPassword(newPassword);
+					setAddress(newAddress);
+					setPhoneNumber(newPhoneNumber);
+					setRewardPoint(rewardPoint);
 	                break;
-	            } else {
-	                writer.write(line);
 	            }
 	        }
-
-	        reader.close();
+	        
+	        CSVWriter writer = new CSVWriter(new FileWriter(file));
+	        writer.writeAll(data);
 	        writer.close();
+	        System.out.println("Data updated successfully.");
 
 	    } catch (IOException e) {
-	        System.out.println("Error writing to file: " + e.getMessage());
-	        return false;
+	    	 e.printStackTrace();
 	    }
 
 	    return changed;
@@ -120,16 +120,14 @@ public class Customer extends BookStore{
 				setPhoneNumber(account[6]);
 				setRewardPoint(account[7]);
 				this.isLogin = true;
-//				System.out.println("Login Successfully! K. " + name);
+				System.out.println("Login Successfully! K. " + name);
 				break; 
-			} else if (account[3].equals(email) || account[4].equals(password)){
-				this.isLogin = false;
-				
-			} 
+			}else {
+				continue;
+			}
 		}
 		return isLogin;
-//			System.out.println("Login Unsuccessfully!");
-//			System.out.println("Try again! Email or Password is wrong");
+			
 		} 
 		
 	public void setID(String id) {
